@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">TestUberApp</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_trips">Your trips</string>
+    <string name="menu_payment">Payment</string>
+    <string name="menu_discounts">Get discounts</string>
+    <string name="menu_setting">Setting</string>
+    <string name="hint_input_address">Where?</string>
+    <string name="hello_user">Hello my user</string>
+    <string name="txt_saved_places">Choise saved places</string>
+</resources>
