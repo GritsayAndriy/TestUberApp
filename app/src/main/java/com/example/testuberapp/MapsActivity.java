@@ -82,6 +82,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onResume() {
         super.onResume();
+        checkConnection(ConnectionReceiver.isConnected(getApplicationContext()));
+        checkEnableLocation(CheckEnableLocationReceiver.checkLocationEnable(getApplicationContext()));
         getDeviceLocation();
     }
 
@@ -291,12 +293,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void showMap() {
-        if (!locationEnable) {
+        if (!locationEnable && !networkEnable) {
             getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
             mGps.setVisibility(View.INVISIBLE);
         } else {
             getSupportFragmentManager().beginTransaction().show(mapFragment).commit();
             getDeviceLocation();
+            checkConnection(ConnectionReceiver.isConnected(getApplicationContext()));
         }
     }
 }

@@ -29,17 +29,14 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="10dp"
+            android:elevation="10dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_gps"
-            android:visibility="visible"
-            android:elevation="10dp"/>
-
+            android:visibility="visible" />
 
 
     </RelativeLayout>
 
 
-        <include layout="@layout/bottom_sheet" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-        <!--    style="@style/Widget.AppCompat.DrawerArrowToggle"-->
+    <include layout="@layout/bottom_sheet" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
