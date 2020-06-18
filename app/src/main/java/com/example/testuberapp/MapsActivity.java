@@ -19,12 +19,10 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.testuberapp.receiver.CheckEnableLocationReceiver;
 import com.example.testuberapp.receiver.ConnectionReceiver;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationAvailability;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
@@ -34,8 +32,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,
@@ -73,19 +69,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         init();
-        getLocationPermission();
-        checkConnection(ConnectionReceiver.isConnected(getApplicationContext()));
-        checkEnableLocation(CheckEnableLocationReceiver.checkLocationEnable(getApplicationContext()));
-
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
+        getLocationPermission();
         checkConnection(ConnectionReceiver.isConnected(getApplicationContext()));
         checkEnableLocation(CheckEnableLocationReceiver.checkLocationEnable(getApplicationContext()));
-        getDeviceLocation();
     }
+
+
 
     private void init() {
         mGps = (ImageView) findViewById(R.id.ic_gps);
@@ -116,7 +110,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 super.onLocationResult(locationResult);
                 Log.d(TAG, "onLocationResult: return location if have location");
                 Location currentLocation = (Location) locationResult.getLastLocation();
-                if (currentLocation != null) {
+                if (currentLocation!=null) {
                     moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
                             DEFAULT_ZOOM);
                 }
@@ -200,7 +194,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         mLocationPermissionGranted = false;
-
         switch (requestCode) {
             case LOCATION_PERMISSION_REQUEST_CODE: {
                 if (grantResults.length > 0) {
@@ -254,8 +247,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onCancel() {
-        if (locationEnable)
-            mGps.setVisibility(View.VISIBLE);
+        if (!locationEnable)
+            mGps.setVisibility(View.INVISIBLE);
     }
 
 
@@ -293,7 +286,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void showMap() {
-        if (!locationEnable && !networkEnable) {
+        if (!locationEnable) {
             getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
             mGps.setVisibility(View.INVISIBLE);
         } else {
